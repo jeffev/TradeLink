@@ -10,6 +10,10 @@ def create_trade(db: Session, trade: models.Trade):
     return db_trade
 
 
+def get_trades(db: Session):
+    return db.query(models.Trade).all()
+
+
 def get_trade(db: Session, trade_id: int):
     return db.query(models.Trade).filter(models.Trade.id == trade_id).first()
 

@@ -27,6 +27,14 @@ def create_trade(trade: schemas.TradeCreate, db: Session = Depends(get_db)):
     return crud.create_trade(db, trade)
 
 
+@app.get("/trades/", response_model=list[schemas.Trade])
+def trades(db: Session = Depends(get_db)):
+    trade = crud.get_trades(db)
+    if trade is None:
+        raise HTTPException(status_code=404, detail="Trades not found")
+    return trade
+
+
 @app.get("/trades/{trade_id}", response_model=schemas.Trade)
 def read_trade(trade_id: int, db: Session = Depends(get_db)):
     trade = crud.get_trade(db, trade_id)
